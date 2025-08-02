@@ -1,0 +1,14 @@
+# Test files
+tests/
+
+# Pypackage Files
+__pycache__/
+
+# Environment
+env/
+
+# ruff
+.ruff_cache/
+
+# LSP config files
+pyrightconfig.json

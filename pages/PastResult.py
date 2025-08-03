@@ -25,7 +25,9 @@ def PastResult(window: Window) -> None:
                 count += 1
         except EOFError:
             window.print("\nComplete..", color=COLORS.LIGHT_GREEN)
-            window.input("Press any key to return...", color=COLORS.LIGHT_RED)
+            window.input(
+                "Press any key to return...", color=COLORS.LIGHT_RED, canBeEmpty=True
+            )
             window.rerender()
 
     except FileNotFoundError:

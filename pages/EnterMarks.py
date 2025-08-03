@@ -26,8 +26,8 @@ def EnterMarks(window: Window) -> None:
         total = float(
             window.input(">>> What was the maximum score? (F): ", hidden=False)
         )
-        score = float(window.input(">>> How much did you score? (F): ", hidden=False))
 
+        score = float(window.input(">>> How much did you score? (F): ", hidden=False))
         score = validate(score, total)
 
         resultFile = open("./tests/result.dat", "ab+")

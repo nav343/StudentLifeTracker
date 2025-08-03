@@ -141,7 +141,8 @@ class Window:
         color: str = COLORS.LIGHT_WHITE,
         hidden: bool = True,
         canBeEmpty: bool = False,
-    ) -> str:
+        dataType: type = str,
+    ):
         """
         For taking input from the user
         The `question` (or placeholder) is printed inside the window buffer but the input field is at the bottom of the terminal
@@ -156,14 +157,16 @@ class Window:
             if (not canBeEmpty and res != "") or (canBeEmpty):
                 self.__pos = default_pos
                 self.print(question + res, color=color)
-                return res
+                return dataType(res)
             else:
                 self.__pos = (self.__pos[0] + 1, self.__pos[1])
                 self.print("Field cannot be empty", color=COLORS.RED)
-                return self.input(question, color, hidden, canBeEmpty)
+                return dataType(
+                    self.input(question, color, hidden, canBeEmpty, dataType)
+                )
         else:
             self.print(question, color=color)
-            return input(">>> ")
+            return dataType(input(">>> "))
 
     def quit(self, clear_term: bool = False) -> None:
         """

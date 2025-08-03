@@ -42,6 +42,5 @@ def Dashboard(window: Window, userData: dict, redirected: bool = False):
                 case _:
                     window.rerender()
                     window.print("Invalid. Try again\n", color=COLORS.RED)
-        except Exception as E:
-            window.print(str(E))
+        except Exception:
             window.print("Invalid. Try again.\n", color=COLORS.RED)

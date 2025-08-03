@@ -35,11 +35,18 @@ def readTodo(window: Window) -> None:
     try:
         window.print("Your Todos", color=COLORS.YELLOW, centered=True)
         files = searchTodo()
-        counter = 1
-        for i in files:
-            window.print(f"{counter}. {str(i)} ---> {str(files[i]).replace('\n', ' ')}")
-            counter += 1
-        window.print()
+        if len(files) != 0:
+            counter = 1
+            for i in files:
+                window.print(
+                    f"{counter}. {str(i)} ---> {str(files[i]).replace('\n', ' ')}"
+                )
+                counter += 1
+            window.print()
+        else:
+            window.print(
+                "You don't have any Todos.\nCreate one now?", color=COLORS.LIGHT_BLUE
+            )
 
     except Exception as E:
         window.print("An unexpected error occurred. Please try again")

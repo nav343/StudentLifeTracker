@@ -136,7 +136,11 @@ class Window:
         self.__set_buffer()
 
     def input(
-        self, question: str, color: str = COLORS.LIGHT_WHITE, hidden: bool = True
+        self,
+        question: str,
+        color: str = COLORS.LIGHT_WHITE,
+        hidden: bool = True,
+        canBeEmpty: bool = False,
     ) -> str:
         """
         For taking input from the user
@@ -149,9 +153,14 @@ class Window:
             self.print(question, color=color)
             self.__pos = (self.__pos[0] - 1, self.__pos[1])
             res = input(">>> ")
-            self.__pos = default_pos
-            self.print(question + res, color=color)
-            return res
+            if (not canBeEmpty and res != "") or (canBeEmpty):
+                self.__pos = default_pos
+                self.print(question + res, color=color)
+                return res
+            else:
+                self.__pos = (self.__pos[0] + 1, self.__pos[1])
+                self.print("Field cannot be empty", color=COLORS.RED)
+                return self.input(question, color, hidden, canBeEmpty)
         else:
             self.print(question, color=color)
             return input(">>> ")

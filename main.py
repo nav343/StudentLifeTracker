@@ -20,5 +20,8 @@ try:
 except KeyboardInterrupt:
     window.quit()
 except FileNotFoundError:
-    userData = CreateUser()
-    Dashboard(window, userData)
+    try:
+        userData = CreateUser()
+        Dashboard(window, userData)
+    except KeyboardInterrupt:
+        window.quit()

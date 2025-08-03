@@ -7,7 +7,7 @@ def CreateUser() -> dict:
     window = Window()
     window.print("Create Account\n", centered=True, color=COLORS.LIGHT_GREEN)
     window.print(
-        "Hi there. \nGood to have you here.\nSeems like you are new here. Let's quickly create an account!!\n"
+        "Hi there. \nGood to have you with us.\nSeems like you are new here. Let's quickly create a profile!!\n"
     )
     window.print("Instructions", color=COLORS.YELLOW)
     window.print(
@@ -22,13 +22,24 @@ def CreateUser() -> dict:
         window.quit()
 
     window.rerender()
-    name = window.input("What's your name? (S)").title()
-    age = int(window.input("What's your age? (I)"))
-    std = int(window.input("What class are you studying in? (I)"))
-    subs = int(window.input("How many subjects do you have in your school? (I)"))
-    favsub = window.input("What's you favourite subject? (S)")
+    name = window.input(
+        "What's your name? (S): ", hidden=False, color=COLORS.YELLOW
+    ).title()
+    age = int(window.input("What's your age? (I): ", hidden=False))
+    std = int(window.input("What class are you studying in? (I): ", hidden=False))
+    subs = int(
+        window.input(
+            "How many subjects do you have in your school? (I): ", hidden=False
+        )
+    )
+    favsub = window.input(
+        "What's you favourite subject? (S): ", hidden=False, canBeEmpty=True
+    )
     prevperc = float(
-        window.input(f"How much did you score in your last class? ({std - 1}) (F)")
+        window.input(
+            f"How much did you score in your last class? ({std - 1}) (F): ",
+            hidden=False,
+        )
     )
 
     window.rerender()

@@ -20,8 +20,9 @@ def createTodo(window: Window) -> None:
 
 def searchTodo() -> dict:
     files = {}
+    reserved = ["user_data.dat", "result.dat"]
     for file in os.listdir("./tests/"):
-        if file[-1:-4:-1][::-1] == "dat" and file != "user_data.dat":
+        if file[-1:-4:-1][::-1] == "dat" and file not in reserved:
             dateFormat = f"{file[8:10]}/{file[5:7]}/{file[0:4]} ({file[11:13]})HR ({file[14:16]})MIN"
             spoilerFile = open("./tests/" + file, "rb")
             spoiler = str(pickle.load(spoilerFile)["data"][0:30] + "...")
@@ -69,8 +70,7 @@ def Todo(window: Window) -> None:
                 createTodo(window)
             case 3:
                 window.rerender()
-                window.print("Haven't figured out yet...")
-                time.sleep(2)
+                break
             case _:
                 window.print("Invalid", color=COLORS.RED)
                 time.sleep(2)

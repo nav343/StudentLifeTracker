@@ -52,6 +52,7 @@ class Window:
         # return f"│{' ' * (1 if not centered else self.window_size[1] // 2 - len(msg) // 2 + 5)}{msg}{' ' * (self.window_size[1] - len(msg) + 8 if not centered else self.window_size[1] // 2 - len(msg) // 2 + 3)}│"
         lenMessageWithoutColor = msg[11:-5]
         partialText = f"│{' ' * (1 if not centered else self.window_size[1] // 2 - len(lenMessageWithoutColor) // 2 - 1)}{msg}"
+        # Needs some work here, I have no idea where that ... + 10 is coming from (got it by hit and trial, seems to be working with 10)
         return f"{partialText}{' ' * (self.window_size[1] - len(partialText) + 10)}│"
 
     def __breakChunk(self, msg: str) -> list:

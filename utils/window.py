@@ -225,9 +225,12 @@ class Window:
         self.refresh()
         print(">>> ")
         txt = sys.stdin.read()
-        for i in range(6, 1, -1):
-            print(f"Returning to old state in {i} seconds", end="\r")
-            time.sleep(1)
+        progress = ""
+        print("\n" * 2)
+        for _ in range(6):
+            progress += "."
+            print(TextColor(f"Saving text {progress}", color=COLORS.GREEN), end="\r")
+            time.sleep(0.2)
         self.__buffer = old
         self.refresh()
         return txt

@@ -1,5 +1,6 @@
 # from operator import itemgetter
 
+import datetime
 from pages.PastResult import PastResult
 from pages.EnterMarks import EnterMarks
 from pages.Todo import Todo
@@ -19,7 +20,12 @@ def Dashboard(window: Window, userData: dict, redirected: bool = False):
     """
     name = userData["name"]
 
-    window.print("Student Dashboard \n\n", centered=True, color=COLORS.LIGHT_BLUE)
+    window.print("Student Dashboard \n", centered=True, color=COLORS.LIGHT_BLUE)
+    window.print(
+        "/".join(str(datetime.datetime.now().date()).split("-")[::-1]),
+        color=COLORS.LIGHT_RED,
+        rightAlign=True,
+    )
     window.print(f">> Welcome {name}.\n", color=COLORS.LIGHT_GREEN)
     while True:
         try:

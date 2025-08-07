@@ -48,12 +48,18 @@ class Window:
         self.__buffer.append(f"└{'─' * (self.window_size[1] - 2)}┘")
         self.__pos = (1, 1)
 
-    def __format(self, msg: str, centered: bool = False) -> str:
+    def __format(
+        self, msg: str, centered: bool = False, rightAlign: bool = False
+    ) -> str:
         # return f"│{' ' * (1 if not centered else self.window_size[1] // 2 - len(msg) // 2 + 5)}{msg}{' ' * (self.window_size[1] - len(msg) + 8 if not centered else self.window_size[1] // 2 - len(msg) // 2 + 3)}│"
         lenMessageWithoutColor = msg[11:-5]
-        partialText = f"│{' ' * (1 if not centered else self.window_size[1] // 2 - len(lenMessageWithoutColor) // 2 - 1)}{msg}"
+        partialText = (
+            f"│{' ' * (1 if not centered else (self.window_size[1] // 2 - len(lenMessageWithoutColor) // 2 - 1))}{msg}"
+            if not rightAlign
+            else f"│{' ' * (self.window_size[1] - len(msg) + 8)}{msg}"
+        )
         # Needs some work here, I have no idea where that ... + 10 is coming from (got it by hit and trial, seems to be working with 10)
-        return f"{partialText}{' ' * (self.window_size[1] - len(partialText) + 10)}│"
+        return f"{partialText}{' ' * (self.window_size[1] - len(partialText) + 10 if not rightAlign else 1)}│"
 
     def __breakChunk(self, msg: str) -> list:
         res = []
@@ -79,6 +85,7 @@ class Window:
         msg: str = " ",
         centered: bool = False,
         color: str = COLORS.LIGHT_WHITE,
+        rightAlign: bool = False,
         verticalCenter: bool = False,
         endSpace: bool = False,
     ) -> None:
@@ -101,7 +108,7 @@ class Window:
             for i in msg.split("\n"):
                 self.__buffer[
                     self.__pos[0] if not verticalCenter else self.window_size[0] // 2
-                ] = self.__format(TextColor(i, color), centered)
+                ] = self.__format(TextColor(i, color), centered, rightAlign)
                 if verticalCenter:
                     self.__pos = (self.window_size[0] // 2 + 1, self.__pos[1])
                 else:
@@ -114,7 +121,7 @@ class Window:
             for j in msg.split("\n"):
                 for i in self.__breakChunk(j):
                     self.__buffer[self.__pos[0]] = self.__format(
-                        TextColor(i, color), centered
+                        TextColor(i, color), centered, rightAlign
                     )
                     self.__slots -= 1
                     self.__pos = (self.__pos[0] + 1, self.__pos[1])

@@ -21,8 +21,11 @@ Go to the project directory
 
 ```bash
   cd StudentLifeTracker
+  mkdir tests
   python main.py
 ```
+
+\*Making the tests folder is currently required as the program is still in its initial stage of development. It will be removed once v1 is ready.
 
 `or python3 main.py` for some linux systems
 

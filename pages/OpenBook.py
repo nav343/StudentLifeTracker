@@ -72,8 +72,13 @@ def OpenBook(window: Window, userData: dict) -> None:
             window.print("WIP 10")
         elif int(userData["std"]) == 11:
             window.print("WIP 11")
-        else:
+        elif int(userData["std"]) == 12:
             window.print("WIP 12")
+
+        else:
+            window.print(
+                "Sorry!!. Books for your class are not available.", color=COLORS.RED
+            )
 
         window.input("Press any key to go back...", color=COLORS.LIGHT_RED)
         window.rerender()

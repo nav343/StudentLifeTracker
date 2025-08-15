@@ -70,7 +70,6 @@ def Notes(window: Window) -> None:
             case 1:
                 window.rerender()
                 numberOfNotes = readNotes(window)
-                # window.print(f"There are {numberOfNotes} notes")
                 if numberOfNotes != 0:
                     choice = ""
                     while True:

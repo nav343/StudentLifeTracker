@@ -1,10 +1,22 @@
 import pickle
+from utils.loader import Loader
 from utils.window import Window
 from utils.colors import COLORS
 
 
+logo = """
+███████╗██╗░░██╗░█████╗░██████╗░░█████╗░
+██╔════╝╚██╗██╔╝██╔══██╗██╔══██╗██╔══██╗
+█████╗░░░╚███╔╝░██║░░██║██████╔╝██║░░██║
+██╔══╝░░░██╔██╗░██║░░██║██╔══██╗██║░░██║
+███████╗██╔╝╚██╗╚█████╔╝██║░░██║╚█████╔╝
+╚══════╝╚═╝░░╚═╝░╚════╝░╚═╝░░╚═╝░╚════╝░
+"""
+
+
 def CreateUser() -> dict:
     window = Window()
+    Loader(window, logo, speed=0.1)
     window.print("Create Account\n", centered=True, color=COLORS.LIGHT_GREEN)
     window.print(
         "Hi there. \nGood to have you with us.\nSeems like you are new here. Let's quickly create a profile!!\n"
@@ -27,6 +39,9 @@ def CreateUser() -> dict:
     ).title()
     age = int(window.input("What's your age? (I): ", hidden=False))
     std = int(window.input("What class are you studying in? (I): ", hidden=False))
+    board = window.input(
+        "What board is your school affiliated with? (S): ", hidden=False
+    ).upper()
     subs = int(
         window.input(
             "How many subjects do you have in your school? (I): ", hidden=False
@@ -45,7 +60,7 @@ def CreateUser() -> dict:
     window.rerender()
     window.print("Confirm Details\n", color=COLORS.YELLOW)
     window.print(
-        f"Name: {name}\nAge: {age}\nClass: {std}\nNumber of Subjects: {subs}\nFavourite Subject: {favsub}\nPrevious class %age: {prevperc}\n\n"
+        f"Name: {name}\nAge: {age}\nClass: {std}\nBoard: {board}\nNumber of Subjects: {subs}\nFavourite Subject: {favsub}\nPrevious class %age: {prevperc}\n\n"
     )
     confirm = window.input(
         "Are the details correct?\nShall we proceed? (y to continue, n to quit)"
@@ -59,6 +74,7 @@ def CreateUser() -> dict:
         "subs": subs,
         "favsub": favsub,
         "prevperc": prevperc,
+        "board": board,
     }
     setupFile = open("tests/user_data.dat", "wb+")
     pickle.dump(data, setupFile)

@@ -22,10 +22,15 @@ def searchTodo() -> dict:
     files = {}
     reserved = ["user_data.dat", "result.dat"]
     for file in os.listdir("./tests/"):
-        if file[-1:-4:-1][::-1] == "dat" and file not in reserved:
+        if (
+            file[-1:-4:-1][::-1] == "dat"
+            and file not in reserved
+            and file[0:4] != "Note"
+        ):
             dateFormat = f"{file[8:10]}/{file[5:7]}/{file[0:4]} ({file[11:13]})HR ({file[14:16]})MIN"
             spoilerFile = open("./tests/" + file, "rb")
-            spoiler = str(pickle.load(spoilerFile)["data"][0:30] + "...")
+            data = str(pickle.load(spoilerFile)["data"])
+            spoiler = data[0 : (30 if len(data) >= 30 else len(data))] + "..."
             spoilerFile.close()
             files[dateFormat] = spoiler
     return files

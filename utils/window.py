@@ -1,5 +1,8 @@
 import os
-import readline
+
+if os.name == "posix":
+    import readline
+
 import sys
 import time
 

@@ -13,3 +13,5 @@ env/
 
 # LSP config files
 pyrightconfig.json
+
+dist/

@@ -7,7 +7,7 @@ from utils.window import Window
 
 def searchNotes() -> list:
     files = []
-    for file in os.listdir("./tests/"):
+    for file in os.listdir(".exoro_data/"):
         if file[0:4] == "Note" and file[-1:-4:-1][::-1] == "dat":
             files.append(file[5:-4])
     return files
@@ -44,7 +44,7 @@ def createNotes(window: Window):
     txt = window.editor("Notes")
     try:
         data = {
-            "file": f"tests/Note_{str(title).replace(' ', '_')}.dat",
+            "file": f".exoro_data/Note_{str(title).replace(' ', '_')}.dat",
             "content": txt,
         }
         file = open(data["file"], "wb+")
@@ -92,7 +92,7 @@ def Notes(window: Window) -> None:
 
                     try:
                         noteFile = open(
-                            f"tests/Note_{searchNotes()[choice - 1]}.dat", "rb"
+                            f".exoro_data/Note_{searchNotes()[choice - 1]}.dat", "rb"
                         )
                         data = pickle.load(noteFile)["content"]
                         window.rerender()

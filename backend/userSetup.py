@@ -1,3 +1,4 @@
+import os
 import pickle
 from utils.loader import Loader
 from utils.window import Window
@@ -17,6 +18,13 @@ logo = """
 def CreateUser() -> dict:
     window = Window()
     Loader(window, logo, speed=0.1)
+    if os.path.isdir(".exoro_data"):
+        window.print("ERROR", color=COLORS.RED, centered=True)
+        window.print(
+            "YOU ALREADY HAVE A DIRECTORY NAMED .exoro_data\nIf you wish to use this application, please delete .exoro_data and re-run the program",
+            color=COLORS.RED,
+        )
+        exit()
     window.print("Create Account\n", centered=True, color=COLORS.LIGHT_GREEN)
     window.print(
         "Hi there. \nGood to have you with us.\nSeems like you are new here. Let's quickly create a profile!!\n"
@@ -76,7 +84,9 @@ def CreateUser() -> dict:
         "prevperc": prevperc,
         "board": board,
     }
-    setupFile = open("tests/user_data.dat", "wb+")
+
+    os.mkdir(".exoro_data")
+    setupFile = open(".exoro_data/user_data.dat", "wb+")
     pickle.dump(data, setupFile)
     setupFile.close()
     window.print("\n\nSetup successful.")

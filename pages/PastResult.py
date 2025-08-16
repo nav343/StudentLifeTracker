@@ -18,7 +18,7 @@ def PastResult(window: Window) -> None:
             return result
 
     try:
-        result = parseResult("./tests/result.dat")
+        result = parseResult(".exoro_data/result.dat")
         longestSubjectNameLength = max([len(x["sub"]) for x in result])
         window.print()
         window.print("─" * (window.window_size[1] - 3))

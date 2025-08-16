@@ -1,5 +1,6 @@
 # Test files
 tests/
+.exoro_data/
 
 # Pypackage Files
 __pycache__/

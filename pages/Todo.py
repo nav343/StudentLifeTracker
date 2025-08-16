@@ -10,7 +10,7 @@ from utils.window import Window
 def createTodo(window: Window) -> None:
     txt = window.editor("Todo Editor ")
     data = {
-        "file": f"tests/{datetime.datetime.now().date()}-{datetime.datetime.now().time()}.dat",
+        "file": f".exoro_data/TODO_{datetime.datetime.now().date()}-{datetime.datetime.now().time()}.dat",
         "data": txt,
     }
     file = open(data["file"], "wb+")
@@ -20,15 +20,10 @@ def createTodo(window: Window) -> None:
 
 def searchTodo() -> dict:
     files = {}
-    reserved = ["user_data.dat", "result.dat"]
-    for file in os.listdir("./tests/"):
-        if (
-            file[-1:-4:-1][::-1] == "dat"
-            and file not in reserved
-            and file[0:4] != "Note"
-        ):
-            dateFormat = f"{file[8:10]}/{file[5:7]}/{file[0:4]} ({file[11:13]})HR ({file[14:16]})MIN"
-            spoilerFile = open("./tests/" + file, "rb")
+    for file in os.listdir(".exoro_data/"):
+        if file[0:4] == "TODO":
+            dateFormat = f"{file[13:15]}/{file[10:12]}/{file[5:9]} ({file[16:18]})HR ({file[19:21]})MIN"
+            spoilerFile = open(".exoro_data/" + file, "rb")
             data = str(pickle.load(spoilerFile)["data"])
             spoiler = data[0 : (30 if len(data) >= 30 else len(data))] + "..."
             spoilerFile.close()
@@ -36,7 +31,7 @@ def searchTodo() -> dict:
     return files
 
 
-def readTodo(window: Window) -> None:
+def readTodo(window: Window) -> int:
     try:
         window.print("Your Todos", color=COLORS.YELLOW, centered=True)
         files = searchTodo()
@@ -48,19 +43,24 @@ def readTodo(window: Window) -> None:
                 )
                 counter += 1
             window.print()
+            return counter - 1
         else:
             window.print(
                 "You don't have any Todos.\nCreate one now?", color=COLORS.LIGHT_BLUE
             )
+            return 0
 
     except Exception as E:
         window.print("An unexpected error occurred. Please try again")
         window.print(str(E))
         exit()
 
+
+"""
     choice = window.input("Go back? (OR n to QUIT)", color=COLORS.LIGHT_GREEN)
     if choice == "n":
         window.quit()
+"""
 
 
 def Todo(window: Window) -> None:
@@ -76,7 +76,9 @@ def Todo(window: Window) -> None:
         match act:
             case 1:
                 window.rerender()
-                readTodo(window)
+                noOfTodos = readTodo(window)
+                window.print(str(noOfTodos))
+                time.sleep(2)
             case 2:
                 window.rerender()
                 createTodo(window)

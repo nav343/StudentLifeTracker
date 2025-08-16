@@ -30,7 +30,7 @@ def EnterMarks(window: Window) -> None:
         score = float(window.input(">>> How much did you score? (F): ", hidden=False))
         score = validate(score, total)
 
-        resultFile = open("./tests/result.dat", "ab+")
+        resultFile = open(".exoro_data/result.dat", "ab+")
         data = {
             "sub": sub,
             "total": total,

@@ -102,11 +102,13 @@ def readTodo(window: Window) -> None:
                 color=COLORS.LIGHT_BLUE,
             )
             if str(completed).isdigit():
-                if int(completed) - 1 <= len(data):
+                if int(completed) - 1 < len(data):
                     data[int(completed) - 1]["checked"] = (
                         True if not data[int(completed) - 1]["checked"] else False
                     )
                     updateTodo(data)
+                    window.rerender()
+                    readTodo(window)
                 else:
                     window.print(
                         f"Cannot access TODO {completed} as you only have {len(data)} TODO(s)",

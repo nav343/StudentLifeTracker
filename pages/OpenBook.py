@@ -1,6 +1,21 @@
 from utils.colors import COLORS
 from utils.window import Window
 
+wip = """
+░██╗░░░░░░░██╗░█████╗░██████╗░██╗░░██╗  ██╗███╗░░██╗
+░██║░░██╗░░██║██╔══██╗██╔══██╗██║░██╔╝  ██║████╗░██║
+░╚██╗████╗██╔╝██║░░██║██████╔╝█████═╝░  ██║██╔██╗██║
+░░████╔═████║░██║░░██║██╔══██╗██╔═██╗░  ██║██║╚████║
+░░╚██╔╝░╚██╔╝░╚█████╔╝██║░░██║██║░╚██╗  ██║██║░╚███║
+░░░╚═╝░░░╚═╝░░░╚════╝░╚═╝░░╚═╝╚═╝░░╚═╝  ╚═╝╚═╝░░╚══╝
+
+██████╗░██████╗░░█████╗░░██████╗░██████╗░███████╗░██████╗░██████╗
+██╔══██╗██╔══██╗██╔══██╗██╔════╝░██╔══██╗██╔════╝██╔════╝██╔════╝
+██████╔╝██████╔╝██║░░██║██║░░██╗░██████╔╝█████╗░░╚█████╗░╚█████╗░
+██╔═══╝░██╔══██╗██║░░██║██║░░╚██╗██╔══██╗██╔══╝░░░╚═══██╗░╚═══██╗
+██║░░░░░██║░░██║╚█████╔╝╚██████╔╝██║░░██║███████╗██████╔╝██████╔╝
+╚═╝░░░░░╚═╝░░╚═╝░╚════╝░░╚═════╝░╚═╝░░╚═╝╚══════╝╚═════╝░╚═════╝░
+"""
 
 def OpenBook(window: Window, userData: dict) -> None:
     _12 = {
@@ -58,6 +73,8 @@ def OpenBook(window: Window, userData: dict) -> None:
 
     while True:
         window.rerender()
+        window.print(wip)
+        """
         window.print(
             f"Open Textbook for class {userData['board']} {userData['std']}",
             color=COLORS.YELLOW,
@@ -79,6 +96,7 @@ def OpenBook(window: Window, userData: dict) -> None:
             window.print(
                 "Sorry!!. Books for your class are not available.", color=COLORS.RED
             )
+        """
 
         window.input("Press any key to go back...", color=COLORS.LIGHT_RED)
         window.rerender()

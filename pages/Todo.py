@@ -92,8 +92,9 @@ def readTodo(window: Window) -> None:
         (count, data) = searchTodo()
         if count != 0:
             for i in range(count):
+                trimmedStr = " ".join(data[i]["data"].split("\n"))
                 window.print(
-                    f"({'✓' if data[i]['checked'] else '○'}) ({i + 1}) -> {data[i]['data']}".strip()
+                    f"({'✓' if data[i]['checked'] else '○'}) ({i + 1}) -> {trimmedStr[0:20] + '...' if len(trimmedStr) >= 20 else trimmedStr}".strip()
                 )
             window.print()
 

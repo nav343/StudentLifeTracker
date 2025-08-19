@@ -225,7 +225,7 @@ class Window:
         self.__buffer.append(
             self.__format(
                 TextColor(
-                    "Start typing below and enter Ctrl-D to save and exit editor",
+                    f"Start typing below and {'press Ctrl-Z and hit enter' if os.name == 'nt' else 'press Ctrl-D'} to save and exit editor",
                     COLORS.YELLOW,
                 )
             )

@@ -39,13 +39,38 @@ def Dashboard(window: Window, userData: dict, redirected: bool = False):
         rightAlign=True,
     )
     window.print(f">> Welcome {name}.\n", color=COLORS.LIGHT_GREEN)
+    options_cbse = [
+        "Enter marks",
+        "View Past Result",
+        "Open ToDo",
+        "Open Textbook",
+        "Open Notes",
+        "Exit",
+    ]
+    options_oth = [
+        "Enter marks",
+        "View Past Result",
+        "Open ToDo",
+        "Open Notes",
+        "Exit",
+    ]
     while True:
         try:
+            """
             action = int(
                 window.input(
                     f"What do you want to do today?\n1. Enter marks\n2. View past result\n3. Open Todos\n{'4. Open Textbook\n' if str(board).lower() == 'cbse' else ''}{'5' if str(board).lower() == 'cbse' else '4'}. Notes\n{'6' if str(board).lower() == 'cbse' else '5'}. Quit",
                     color=COLORS.YELLOW,
                 )
+            )
+            """
+            window.print("What do you want to do today?", color=COLORS.YELLOW)
+            action = (
+                window.menu(
+                    options_cbse if str(board).lower() == "cbse" else options_oth,
+                    color=COLORS.YELLOW,
+                )
+                + 1
             )
             if str(board).lower() == "cbse":
                 match action:

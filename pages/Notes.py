@@ -25,8 +25,7 @@ def readNotes(window: Window) -> int:
             window.print()
         else:
             window.print("You don't have any Notes", color=COLORS.LIGHT_BLUE)
-            window.print("Redirecting...", color=COLORS.LIGHT_RED)
-            time.sleep(2)
+            window.input("Press any key to go back", color=COLORS.LIGHT_RED)
 
     except Exception as E:
         window.print("An unexpected error occurred. Please try again")
@@ -59,11 +58,24 @@ def createNotes(window: Window):
 def Notes(window: Window) -> None:
     while True:
         window.rerender()
+        """
         act = int(
             window.input(
                 "Entering Notes mode....\n\n1. Read existing Notes\n2. Create new Note\n3. Go back",
                 color=COLORS.YELLOW,
             )
+        )
+        """
+        act = (
+            window.menu(
+                [
+                    "Read existing Notes",
+                    "Create new Note",
+                    "Go back",
+                ],
+                color=COLORS.YELLOW,
+            )
+            + 1
         )
 
         match act:

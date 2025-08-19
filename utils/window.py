@@ -32,6 +32,7 @@ class Window:
     __pos: tuple[int, int]
     __clear = "cls" if os.name == "nt" else "clear"
     __slots: int
+    __choice: int = 0
 
     def __init__(self) -> None:
         os.system(self.__clear)
@@ -212,6 +213,31 @@ class Window:
             )
             self.refresh()
             time.sleep(speed)
+
+    def menu(self, options: list, color: str = COLORS.LIGHT_WHITE) -> int:
+        idx = 1
+        for i in range(len(options)):
+            self.print(
+                f"{'○' if self.__choice != i else '•'} ({idx}) {options[i]}",
+                color=color,
+            )
+            idx += 1
+        ctrl = self.input("d to select next u to select previous")
+        if ctrl.lower() == "d":
+            if self.__choice < len(options) - 1:
+                self.__choice += 1
+            else:
+                self.__choice = 0
+            self.rerender()
+            self.menu(options, color)
+        elif ctrl.lower() == "u":
+            if self.__choice <= 0:
+                self.__choice = len(options) - 1
+            else:
+                self.__choice -= 1
+            self.rerender()
+            self.menu(options, color)
+        return self.__choice
 
     def editor(self, header: str = "Editor") -> str:
         txt: str = ""

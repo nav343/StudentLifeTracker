@@ -1,6 +1,8 @@
 import os
 import pickle
 import time
+
+from tabulate import tabulate
 from utils.colors import COLORS
 from utils.window import Window
 
@@ -58,25 +60,18 @@ def createNotes(window: Window):
 def Notes(window: Window) -> None:
     while True:
         window.rerender()
-        """
-        act = int(
-            window.input(
-                "Entering Notes mode....\n\n1. Read existing Notes\n2. Create new Note\n3. Go back",
-                color=COLORS.YELLOW,
-            )
+        window.print(
+            "Entering Notes mode....\n",
+            color=COLORS.YELLOW,
         )
-        """
-        act = (
-            window.menu(
-                [
-                    "Read existing Notes",
-                    "Create new Note",
-                    "Go back",
-                ],
-                color=COLORS.YELLOW,
-            )
-            + 1
+        window.print(
+            tabulate(
+                [["1. Read existing Notes", "2. Create new Note", "3. Go back"]],
+                tablefmt="fancy_outline",
+            ),
+            color=COLORS.LIGHT_GREEN,
         )
+        act = int(window.input(""))
 
         match act:
             case 1:

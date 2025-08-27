@@ -1,4 +1,5 @@
 import os
+from pynput import keyboard
 
 if os.name == "posix":
     import readline
@@ -214,30 +215,50 @@ class Window:
             self.refresh()
             time.sleep(speed)
 
+    # BIG WORK IN PROGRESS
     def menu(self, options: list, color: str = COLORS.LIGHT_WHITE) -> int:
-        idx = 1
-        for i in range(len(options)):
-            self.print(
-                f"{'○' if self.__choice != i else '•'} ({idx}) {options[i]}",
-                color=color,
-            )
-            idx += 1
-        ctrl = self.input("d to select next u to select previous")
-        if ctrl.lower() == "d":
-            if self.__choice < len(options) - 1:
-                self.__choice += 1
-            else:
-                self.__choice = 0
-            self.rerender()
-            self.menu(options, color)
-        elif ctrl.lower() == "u":
-            if self.__choice <= 0:
-                self.__choice = len(options) - 1
-            else:
-                self.__choice -= 1
-            self.rerender()
-            self.menu(options, color)
-        return self.__choice
+        try:
+
+            def on_release(key):
+                if key == keyboard.Key.enter:
+                    return False
+
+            def on_press(key):
+                try:
+                    if key.char == "j":
+                        if self.__choice < len(options) - 1:
+                            self.__choice += 1
+                        else:
+                            self.__choice = 0
+                        self.rerender()
+                        self.menu(options, color)
+                    elif key.char == "k":
+                        if self.__choice <= 0:
+                            self.__choice = len(options) - 1
+                        else:
+                            self.__choice -= 1
+                        self.rerender()
+                        self.menu(options, color)
+                except AttributeError:
+                    if key == keyboard.Key.enter:
+                        self.print("NICE")
+                        listener.stop()
+                        keyboard.Controller().press(keyboard.Key.enter)
+
+            listener = keyboard.Listener(on_press=on_press, on_release=on_release)
+            listener.start()
+            idx = 1
+            for i in range(len(options)):
+                self.print(
+                    f"{'○' if self.__choice != i else '•'} ({idx}) {options[i]}",
+                    color=color,
+                )
+                idx += 1
+            self.print("j to select next k to select previous")
+            self.input("")
+            return self.__choice
+        except Exception:
+            return self.__choice
 
     def editor(self, header: str = "Editor") -> str:
         txt: str = ""
@@ -270,3 +291,7 @@ class Window:
         self.__buffer = old
         self.refresh()
         return txt
+
+    def table(self, values: list) -> None:
+        for i in values:
+            self.print(i)

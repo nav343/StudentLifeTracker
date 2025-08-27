@@ -1,6 +1,8 @@
 # from operator import itemgetter
 
 import datetime
+from tabulate import tabulate
+from pages.Habit import Habit
 from pages.Notes import Notes
 from pages.OpenBook import OpenBook
 from pages.PastResult import PastResult
@@ -24,13 +26,7 @@ def Dashboard(window: Window, userData: dict, redirected: bool = False):
     if not redirected:
         Loader(window, logo, speed=0.1)
 
-    """
-    name, age, std, subs, favsub, prevperc = itemgetter(
-        "name", "age", "std", "subs", "favsub", "prevperc"
-    )(userData)
-    """
     name = userData["name"]
-    board = userData["board"]
 
     window.print("Student Dashboard \n", centered=True, color=COLORS.LIGHT_BLUE)
     window.print(
@@ -40,71 +36,41 @@ def Dashboard(window: Window, userData: dict, redirected: bool = False):
     )
     window.print(f">> Welcome {name}.\n", color=COLORS.LIGHT_GREEN)
     options_cbse = [
-        "Enter marks",
-        "View Past Result",
-        "Open ToDo",
-        "Open Textbook",
-        "Open Notes",
-        "Exit",
-    ]
-    options_oth = [
-        "Enter marks",
-        "View Past Result",
-        "Open ToDo",
-        "Open Notes",
-        "Exit",
+        ["1. Enter marks", "2. View Past Result", "3. Open ToDo"],
+        ["4. Open Textbook", "5. Open Notes", "6. Habit"],
+        ["", "7. Exit", ""],
     ]
     while True:
         try:
-            """
-            action = int(
-                window.input(
-                    f"What do you want to do today?\n1. Enter marks\n2. View past result\n3. Open Todos\n{'4. Open Textbook\n' if str(board).lower() == 'cbse' else ''}{'5' if str(board).lower() == 'cbse' else '4'}. Notes\n{'6' if str(board).lower() == 'cbse' else '5'}. Quit",
-                    color=COLORS.YELLOW,
-                )
+            window.print("What do you want to do today?\n", color=COLORS.YELLOW)
+            window.print(
+                tabulate(
+                    options_cbse,
+                    tablefmt="fancy_grid",
+                    stralign="center",
+                    missingval="---",
+                ),
+                color=COLORS.LIGHT_GREEN,
             )
-            """
-            window.print("What do you want to do today?", color=COLORS.YELLOW)
-            action = (
-                window.menu(
-                    options_cbse if str(board).lower() == "cbse" else options_oth,
-                    color=COLORS.YELLOW,
-                )
-                + 1
-            )
-            if str(board).lower() == "cbse":
-                match action:
-                    case 1:
-                        EnterMarks(window)
-                    case 2:
-                        PastResult(window)
-                    case 3:
-                        Todo(window)
-                    case 4:
-                        OpenBook(window, userData)
-                    case 5:
-                        Notes(window)
-                    case 6:
-                        window.print(">>> Thanks", color=COLORS.GREEN)
-                        window.quit()
-                    case _:
-                        window.rerender()
-                        window.print("Invalid. Try again\n", color=COLORS.RED)
-            else:
-                match action:
-                    case 1:
-                        EnterMarks(window)
-                    case 2:
-                        PastResult(window)
-                    case 3:
-                        Todo(window)
-                    case 4:
-                        Notes(window)
-                    case 5:
-                        window.print(">>> Thanks", color=COLORS.GREEN)
-                        window.quit()
-                    case _:
-                        window.rerender()
-
+            action = int(window.input(""))
+            match action:
+                case 1:
+                    EnterMarks(window)
+                case 2:
+                    PastResult(window)
+                case 3:
+                    Todo(window)
+                case 4:
+                    OpenBook(window, userData)
+                case 5:
+                    Notes(window)
+                case 6:
+                    Habit(window)
+                case 7:
+                    window.print(">>> Thanks", color=COLORS.GREEN)
+                    window.quit()
+                case _:
+                    window.rerender()
+                    window.print("Invalid. Try again\n", color=COLORS.RED)
         except Exception:
             window.print("Invalid. Try again.\n", color=COLORS.RED)

@@ -1,6 +1,8 @@
 import time
 import pickle
 
+from tabulate import tabulate
+
 from utils.colors import COLORS
 from utils.window import Window
 
@@ -138,13 +140,18 @@ def createTodo(window: Window) -> None:
 def Todo(window: Window) -> None:
     while True:
         window.rerender()
-        act = int(
-            window.input(
-                "Entering Todo mode....\n\n1. Read existing Todo's\n2. Create new Todo\n3. Go back",
-                color=COLORS.YELLOW,
-            )
+        window.print(
+            "Entering Todo mode....\n",
+            color=COLORS.YELLOW,
         )
-
+        window.print(
+            tabulate(
+                [["1. Read existing Todos", "2. Create new Todo", "3. Go back"]],
+                tablefmt="fancy_outline",
+            ),
+            color=COLORS.LIGHT_GREEN,
+        )
+        act = int(window.input(""))
         match act:
             case 1:
                 window.rerender()
